@@ -1,8 +1,8 @@
 import re
 
 def is_valid_domain(domain):
-    # Regular expression pattern to match domains
-    domain_pattern = r'^(https?://)?([a-zA-Z0-9.-]+)(:\d+)?$'
+    # Regular expression pattern to match domains (including subdomains)
+    domain_pattern = r'^(https?://)?([a-zA-Z0-9.-]+(:\d+)?)$'
     return re.match(domain_pattern, domain)
 
 def find_domains_in_file(file_path):
@@ -12,9 +12,9 @@ def find_domains_in_file(file_path):
                 domain_match = is_valid_domain(line.strip())
                 if domain_match:
                     protocol = domain_match.group(1) or ''
-                    domain = domain_match.group(2)
-                    port = domain_match.group(3) or ''
-                    print(f"Line {line_number}: {protocol}{domain}{port}")
+                    domain_with_port = domain_match.group(2)
+                    print(f"Line {line_number}: {protocol}{domain_with_port}")
+
     except FileNotFoundError:
         print(f"File not found: {file_path}")
 
