@@ -1,18 +1,20 @@
 import re
 
 def is_valid_domain(domain):
-    # Regular expression pattern to match domain names
+    # Regular expression pattern to match domains
     domain_pattern = r'^(https?://)?([a-zA-Z0-9.-]+)(:\d+)?$'
-    return re.search(domain_pattern, domain)
+    return re.match(domain_pattern, domain)
 
 def find_domains_in_file(file_path):
     try:
         with open(file_path, 'r') as file:
             for line_number, line in enumerate(file, start=1):
-                domains = re.findall(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b', line)
-                for domain in domains:
-                    if is_valid_domain(domain):
-                        print(f"Line {line_number}: {domain}")
+                domain_match = is_valid_domain(line.strip())
+                if domain_match:
+                    protocol = domain_match.group(1) or ''
+                    domain = domain_match.group(2)
+                    port = domain_match.group(3) or ''
+                    print(f"Line {line_number}: {protocol}{domain}{port}")
     except FileNotFoundError:
         print(f"File not found: {file_path}")
 
