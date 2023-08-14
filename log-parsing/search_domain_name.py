@@ -2,7 +2,7 @@ import re
 
 def contains_http_url(line):
     # Regular expression pattern to match http:// or https://
-    url_pattern = r"(http://|https://)\S+|:\d+$"
+    url_pattern = r"(http://|https://|ftp://|sftp://|ssh://|smtp://|pop3://|imap://|telnet://|rdp://|vnc://|nfs://|ldap://)\S+"
     return re.search(url_pattern, line)
 
 def find_http_urls_in_file(file_path):
