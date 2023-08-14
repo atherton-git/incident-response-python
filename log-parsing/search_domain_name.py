@@ -2,7 +2,7 @@ import re
 
 def is_valid_domain(domain):
     # Regular expression pattern to match domain names
-    domain_pattern = r'\b(?:[A-Za-z0-9-]+\.)+[A-Za-z]{2,7}\b'
+    domain_pattern = r"(?:(?:https?|ftp|file):\/\/|www\.|ftp\.)(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[-A-Z0-9+&@#\/%=~_|$?!:,.])*(?:\([-A-Z0-9+&@#\/%=~_|$?!:,.]*\)|[A-Z0-9+&@#\/%=~_|$])"
     return re.search(domain_pattern, domain)
 
 def find_domains_in_file(file_path):
