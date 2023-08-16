@@ -20,21 +20,19 @@ def is_common_username(username):
         'admin', 'root', 'administrator', 'sysadmin', 'superuser',
         'ubnt', 'operator', 'manager', 'supervisor', 'tech'
     ]
-    return any(re.search(fr'\b{re.escape(name)}\b', username, re.IGNORECASE) for name in common_usernames)
+    return any(name in username.lower() for name in common_usernames)
 
 def find_common_usernames_in_file(file_path):
     try:
+        found_match = False  # Flag to track if any matches are found
         with open(file_path, 'r') as file:
             for line_number, line in enumerate(file, start=1):
-                matches = []
-                for match in re.finditer(fr'\b({"|".join(re.escape(name) for name in common_usernames)})\b', line, re.IGNORECASE):
-                    matches.append(match.group())
-                
-                if matches:
-                    highlighted_line = line
-                    for match in matches:
-                        highlighted_line = highlighted_line.replace(match, f"\033[32m{match}\033[0m")
-                    print(f"Line {line_number}: {highlighted_line}", end='')  # Print with matches highlighted in green
+                if is_common_username(line):
+                    highlighted_line = re.sub(fr'\b({re.escape(line.strip())})\b', r"\033[32m\1\033[0m", line)
+                    print(f"Line {line_number}: {highlighted_line}", end='')  # Print in green
+                    found_match = True
+            if not found_match:
+                print("\033[31mNo matches found, or EOF.\033[0m")  # Print in red
     except FileNotFoundError:
         print(f"File not found: {file_path}")
 
