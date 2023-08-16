@@ -15,14 +15,21 @@ import re
 def is_valid_email(address):
     # Regular expression pattern to match email addresses
     email_pattern = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,7}\b'
-    return re.search(email_pattern, address)
+    match = re.search(email_pattern, address)
+    if match:
+        return match.group()  # Return the exact matched email address
+    return None
 
 def find_email_addresses_in_file(file_path):
     try:
         with open(file_path, 'r') as file:
             for line_number, line in enumerate(file, start=1):
-                if is_valid_email(line):
-                    print(f"Line {line_number}: {line.strip()}")  # Print line number and the entire line
+                matched_email = is_valid_email(line)
+                if matched_email:
+                    highlighted_line = line.replace(matched_email, f"\033[32m{matched_email}\033[0m")
+                    print(f"Line {line_number}: {highlighted_line.strip()}")
+            if not any(is_valid_email(line) for line in file):
+                print("\033[31mNo matches found.\033[0m")  # Print in red
     except FileNotFoundError:
         print(f"File not found: {file_path}")
 
