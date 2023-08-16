@@ -26,7 +26,6 @@ def find_http_urls_in_file(file_path):
     except FileNotFoundError:
         print(f"File not found: {file_path}")
 
-# Main program
 if __name__ == "__main__":
     file_path = input('Please enter the filename to search: ')
     find_http_urls_in_file(file_path)
