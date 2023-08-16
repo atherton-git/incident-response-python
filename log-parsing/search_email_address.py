@@ -1,3 +1,15 @@
+"""
+Script: Email Address Finder
+Version: 1.0
+Author: Jack Atherton
+Synopsis: This script searches for valid email addresses in a text file and prints the matching lines.
+
+Description:
+This script reads a text file specified by the user and searches for lines containing valid email addresses.
+It uses a regular expression pattern to identify email addresses, and it prints the line numbers and the
+entire lines where matches are found.
+"""
+
 import re
 
 def is_valid_email(address):
@@ -14,5 +26,6 @@ def find_email_addresses_in_file(file_path):
     except FileNotFoundError:
         print(f"File not found: {file_path}")
 
-# Define the path of the file you wish to parse
-find_email_addresses_in_file(input('Please enter the filename to search: '))
+if __name__ == "__main__":
+    file_path = input('Please enter the filename to search: ')
+    find_email_addresses_in_file(file_path)
