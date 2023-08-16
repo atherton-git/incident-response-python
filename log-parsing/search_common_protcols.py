@@ -29,7 +29,7 @@ def find_http_urls_in_file(file_path):
                     highlighted_line = line.replace(matched_url, f"\033[32m{matched_url}\033[0m")
                     print(f"Line {line_number}: {highlighted_line.strip()}")
             if not any(contains_http_url(line) for line in file):
-                print("\033[31mNo matches found.\033[0m")  # Print "No matches found" in red
+                print("\033[31mNo matches found, or EOF.\033[0m")  # Print in red
     except FileNotFoundError:
         print(f"File not found: {file_path}")
 
