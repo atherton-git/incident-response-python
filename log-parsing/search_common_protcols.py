@@ -15,17 +15,20 @@ import re
 def contains_http_url(line):
     # Regular expression pattern to match various URL schemes
     url_pattern = r"(http://|https://|ftp://|sftp://|ssh://|smtp://|pop3://|imap://|telnet://|rdp://|vnc://|nfs://|ldap://)\S+"
-    return re.search(url_pattern, line)
+    match = re.search(url_pattern, line)
+    if match:
+        return match.group()  # Return the exact matched URL
+    return None
 
 def find_http_urls_in_file(file_path):
     try:
-        found_match = False  # Flag to track if any matches are found
         with open(file_path, 'r') as file:
             for line_number, line in enumerate(file, start=1):
-                if contains_http_url(line):
-                    print(f"\033[32mLine {line_number}: {line.strip()}\033[0m")  # Print in green
-                    found_match = True
-            if not found_match:
+                matched_url = contains_http_url(line)
+                if matched_url:
+                    highlighted_line = line.replace(matched_url, f"\033[32m{matched_url}\033[0m")
+                    print(f"Line {line_number}: {highlighted_line.strip()}")
+            if not any(contains_http_url(line) for line in file):
                 print("\033[31mNo matches found.\033[0m")  # Print "No matches found" in red
     except FileNotFoundError:
         print(f"File not found: {file_path}")
