@@ -15,12 +15,13 @@ Common usernames: admin, root, administrator, sysadmin, superuser,
 
 import re
 
+COMMON_USERNAMES = [
+    'admin', 'root', 'administrator', 'sysadmin', 'superuser',
+    'ubnt', 'operator', 'manager', 'supervisor', 'tech'
+]
+
 def is_common_username(username):
-    common_usernames = [
-        'admin', 'root', 'administrator', 'sysadmin', 'superuser',
-        'ubnt', 'operator', 'manager', 'supervisor', 'tech'
-    ]
-    return any(name in username.lower() for name in common_usernames)
+    return any(name in username.lower() for name in COMMON_USERNAMES)
 
 def find_common_usernames_in_file(file_path):
     try:
@@ -28,8 +29,13 @@ def find_common_usernames_in_file(file_path):
         with open(file_path, 'r') as file:
             for line_number, line in enumerate(file, start=1):
                 if is_common_username(line):
-                    highlighted_line = re.sub(fr'\b({re.escape(line.strip())})\b', r"\033[32m\1\033[0m", line)
-                    print(f"Line {line_number}: {highlighted_line}", end='')  # Print in green
+                    highlighted_line = re.sub(
+                        fr'\b({"|".join(map(re.escape, COMMON_USERNAMES))})\b', 
+                        r"\033[32m\1\033[0m", 
+                        line, 
+                        flags=re.IGNORECASE
+                    )
+                    print(f"Line {line_number}: {highlighted_line}", end='')  # Print the modified line
                     found_match = True
             if not found_match:
                 print("\033[31mNo matches found, or EOF.\033[0m")  # Print in red
