@@ -28,7 +28,8 @@ def find_common_usernames_in_file(file_path):
         with open(file_path, 'r') as file:
             for line_number, line in enumerate(file, start=1):
                 if is_common_username(line):
-                    print(f"\033[31mLine {line_number}: {line.strip()}\033[0m")  # Print in red
+                    highlighted_line = line.replace(line.strip(), f"\033[32m{line.strip()}\033[0m")
+                    print(f"Line {line_number}: {highlighted_line}")  # Print in green
                     found_match = True
             if not found_match:
                 print("\033[31mNo matches found or EOF.\033[0m")  # Print in red
