@@ -24,10 +24,14 @@ def is_common_username(username):
 
 def find_common_usernames_in_file(file_path):
     try:
+        found_match = False  # Flag to track if any matches are found
         with open(file_path, 'r') as file:
             for line_number, line in enumerate(file, start=1):
                 if is_common_username(line):
-                    print(f"Line {line_number}: {line.strip()}")  # Print line number and the entire line
+                    print(f"\033[31mLine {line_number}: {line.strip()}\033[0m")  # Print in red
+                    found_match = True
+            if not found_match:
+                print("\033[31mNo matches found.\033[0m")  # Print "No matches found" in red
     except FileNotFoundError:
         print(f"File not found: {file_path}")
 
