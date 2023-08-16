@@ -1,3 +1,15 @@
+"""
+Script: IPv4 Address Finder
+Version: 1.0
+Author: Jack Atherton
+Synopsis: This script searches for valid IPv4 addresses in a text file and prints the matching lines.
+
+Description:
+This script reads a text file specified by the user and searches for lines containing valid IPv4 addresses.
+It uses a regular expression pattern to identify IPv4 addresses, and it prints the line numbers and the
+entire lines where matches are found.
+"""
+
 import re
 
 def is_valid_ip(address):
@@ -14,5 +26,6 @@ def find_ip_addresses_in_file(file_path):
     except FileNotFoundError:
         print(f"File not found: {file_path}")
 
-# Define the path of the file you wish to parse
-find_ip_addresses_in_file(input('Please enter the filename to search: '))
+if __name__ == "__main__":
+    file_path = input('Please enter the filename to search: ')
+    find_ip_addresses_in_file(file_path)
