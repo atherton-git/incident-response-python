@@ -29,7 +29,7 @@ def find_email_addresses_in_file(file_path):
                     highlighted_line = line.replace(matched_email, f"\033[32m{matched_email}\033[0m")
                     print(f"Line {line_number}: {highlighted_line.strip()}")
             if not any(is_valid_email(line) for line in file):
-                print("\033[31mNo matches found or EOF.\033[0m")  # Print in red
+                print("\033[31mNo matches found, or EOF.\033[0m")  # Print in red
     except FileNotFoundError:
         print(f"File not found: {file_path}")
 
