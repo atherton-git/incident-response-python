@@ -32,7 +32,7 @@ def find_common_usernames_in_file(file_path):
                     print(f"Line {line_number}: {highlighted_line}")  # Print in green
                     found_match = True
             if not found_match:
-                print("\033[31mNo matches found or EOF.\033[0m")  # Print in red
+                print("\033[31mNo matches found, or EOF.\033[0m")  # Print in red
     except FileNotFoundError:
         print(f"File not found: {file_path}")
 
