@@ -17,12 +17,14 @@ def find_text_in_file(file_path, search_query):
 def search_in_single_file(file_path, search_query):
     try:
         with open(file_path, 'r') as file:
+            matches_found = False
             for line_number, line in enumerate(file, start=1):
                 if search_query in line:
+                    matches_found = True
                     highlighted_line = line.replace(search_query, f"\033[32m{search_query}\033[0m")
                     print(f"File: {file_path}, Line {line_number}: {highlighted_line.strip()}")
-            if not any(search_query in line for line in file):
-                print(f"File: {file_path}, No matches found, or EOF.")  # Print file path and message
+            if not matches_found:
+                print(f"\033[31mFile: {file_path}, No matches found, or EOF.\033[0m")  # Print in red
     except Exception as e:
         print(f"An error occurred while processing {file_path}: {e}")
 
