@@ -13,6 +13,7 @@ Common usernames: admin, root, administrator, sysadmin, superuser,
                   ubnt, operator, manager, supervisor, tech
 """
 
+import os
 import re
 
 COMMON_USERNAMES = [
@@ -42,6 +43,24 @@ def find_common_usernames_in_file(file_path):
     except FileNotFoundError:
         print(f"File not found: {file_path}")
 
+def find_common_usernames_in_directory(directory_path):
+    if not os.path.exists(directory_path):
+        print(f"Directory not found: {directory_path}")
+        return
+
+    for root, _, files in os.walk(directory_path):
+        for file in files:
+            file_path = os.path.join(root, file)
+            print(f"Scanning file: {file_path}")
+            find_common_usernames_in_file(file_path)
+            print("-" * 40)
+
 if __name__ == "__main__":
-    file_path = input('Please enter the filename to search: ')
-    find_common_usernames_in_file(file_path)
+    path = input('Please enter the filename or directory to search: ')
+    
+    if os.path.isfile(path):
+        find_common_usernames_in_file(path)
+    elif os.path.isdir(path):
+        find_common_usernames_in_directory(path)
+    else:
+        print(f"Path not found: {path}")
