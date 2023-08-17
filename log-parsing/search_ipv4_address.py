@@ -10,6 +10,7 @@ It uses a regular expression pattern to identify IPv4 addresses, and it prints t
 entire lines where matches are found.
 """
 
+import os
 import re
 
 def is_valid_ip(address):
@@ -33,6 +34,24 @@ def find_ip_addresses_in_file(file_path):
     except FileNotFoundError:
         print(f"File not found: {file_path}")
 
+def find_ip_addresses_in_directory(directory_path):
+    if not os.path.exists(directory_path):
+        print(f"Directory not found: {directory_path}")
+        return
+
+    for root, _, files in os.walk(directory_path):
+        for file in files:
+            file_path = os.path.join(root, file)
+            print(f"Scanning file: {file_path}")
+            find_ip_addresses_in_file(file_path)
+            print("-" * 40)
+
 if __name__ == "__main__":
-    file_path = input('Please enter the filename to search: ')
-    find_ip_addresses_in_file(file_path)
+    path = input('Please enter the filename or directory to search: ')
+    
+    if os.path.isfile(path):
+        find_ip_addresses_in_file(path)
+    elif os.path.isdir(path):
+        find_ip_addresses_in_directory(path)
+    else:
+        print(f"Path not found: {path}")
