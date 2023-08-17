@@ -1,5 +1,5 @@
 """
-Script: HTTP URL Finder
+Script: Common Protocol Finder
 Version: 1.0
 Author: Jack Atherton
 Synopsis: This script searches for HTTP URLs in a text file and prints the matching lines.
@@ -30,7 +30,7 @@ def find_http_urls_in_file(file_path):
                     highlighted_line = line.replace(matched_url, f"\033[32m{matched_url}\033[0m")
                     print(f"File: {file_path}, Line {line_number}: {highlighted_line.strip()}")
             if not any(contains_http_url(line) for line in file):
-                print(f"File: {file_path}, No matches found, or EOF.")  # Print file path and message
+                print("\033[31m" + f"File: {file_path}, No matches found, or EOF." + "\033[0m")  # Print file path and message in red
     except FileNotFoundError:
         print(f"File not found: {file_path}")
 
