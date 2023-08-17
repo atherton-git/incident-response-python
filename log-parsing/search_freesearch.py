@@ -1,3 +1,13 @@
+"""
+Script: Freesearch
+Version: 1.0
+Author: Jack Atherton
+Synopsis: This script permits a freetext search in a log file and prints the matching lines.
+
+Description:
+This script reads a text file specified by the user and searches for lines containing the freetext input.
+"""
+
 import os
 
 def find_text_in_file(file_path, search_query):
