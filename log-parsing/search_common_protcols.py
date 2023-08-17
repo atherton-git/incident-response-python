@@ -35,20 +35,23 @@ def find_http_urls_in_file(file_path):
         print(f"File not found: {file_path}")
 
 def find_http_urls_in_directory(directory_path):
-    try:
-        for root, _, files in os.walk(directory_path):
-            for file_name in files:
-                file_to_search = os.path.join(root, file_name)
-                find_http_urls_in_file(file_to_search)
-    except Exception as e:
-        print(f"An error occurred: {e}")
+    if not os.path.exists(directory_path):
+        print(f"Directory not found: {directory_path}")
+        return
+
+    for root, _, files in os.walk(directory_path):
+        for file_name in files:
+            file_path = os.path.join(root, file_name)
+            print(f"Scanning file: {file_path}")
+            find_http_urls_in_file(file_path)
+            print("-" * 40)
 
 if __name__ == "__main__":
     path = input('Please enter the file or directory path to search: ')
     
-    if os.path.isdir(path):
-        find_http_urls_in_directory(path)
-    elif os.path.isfile(path):
+    if os.path.isfile(path):
         find_http_urls_in_file(path)
+    elif os.path.isdir(path):
+        find_http_urls_in_directory(path)
     else:
-        print("Invalid path provided.")
+        print(f"Path not found: {path}")
